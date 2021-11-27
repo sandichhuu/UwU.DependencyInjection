@@ -36,6 +36,8 @@ public class GameManager : DIContext
 
 #### 2. Binding
 
+##### Binding dependency not create new instance ! not automatic inject dependency into instance !
+
 Bind interface into class.
 ```csharp
 this.binder.BindCommand<InterfaceType, ClassType>(instance);
@@ -124,6 +126,22 @@ private void Awake()
 
 If your project use a lot of binding command before execute, you should enable multithreading feature.
 
+```csharp
+public class GameManager : DIContext
+{
+    public override void Setup()
+    {
+      // This function is used for binding dependency
+    }
+  
+    public override void Initialize()
+    {
+      // Finish setup, start game here
+    }
+}
+```
+
+![Alt text](https://github.com/vohuu/Assets/blob/main/UseMultiThreading.png?raw=true)
 
 ## B. Object pool
 
