@@ -1,17 +1,14 @@
-# UωU ❤❤❤ GOOD UNITY PLUGIN
+# UωU ❤❤❤ UNITY DEPENDENCY INJECTION
 
 ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true) <strong>PRODUCT FROM VIETNAM ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true) LOVE FROM VIETNAMESE</strong> ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true)
 
-Support: Dependency injection, Object pool
-
 Why use ?
 - Dependency injection: Simple flow, multithreading support, easy to control, can binding all relevant types.
-- Object pool: Deep clone object from memory make it fast as posible. (UnityEngine.Object not support clone from memory).
 - Free, open source, allow for commerce purpose.
 
 Any improve idea, please comment on <strong>Issues</strong> tab.
 
-## A. Dependency injection
+## Dependency injection
 
 Support: Field injection, property injection, method inject.
 
@@ -61,7 +58,8 @@ this.binder.ExecuteBindingCommand();
 #### 3. Injection
 
 Use attribute <strong>[Inject]</strong> to inject dependencies into a instance object.
-Use this.Inject to inject dependencies into current class.
+
+Use <strong>this.Inject()</strong> to inject dependencies into current class.
 
 Field injection
 ```csharp
@@ -143,40 +141,6 @@ public class GameManager : DIContext
 ```
 
 ![Alt text](https://github.com/vohuu/Assets/blob/main/UseMultiThreading.png?raw=true)
-
-## B. Object pool
-
-Supper easy to use. Please follow a example bellow.
-
-```csharp
-public class CubeBehaviour : UnityEngine.MonoBehaviour
-{
-}
-
-public class CubePool : Pool<CubeBehaviour>
-{
-}
-
-public class GameManager : DIContext
-{
-    [SerializeField] private CubeBehaviour cubePrefab = default;
-    private CubePool cubePool;
-
-    public override void Setup()
-    {
-        this.cubePool = new CubePool();
-    }
-    
-    public override void Initialize()
-    {
-        var cubePoolPrespawnAmount = 50;
-        this.cubePool.Initialize(this.cubePrefab, cubePoolPrespawnAmount);
-        
-        var instance = this.cubePool.Request(); // Get free item from pool
-        instance.ReturnToPool();                // Return object into pool
-    }
-}
-```
 
 # (づ｡◕‿‿◕｡)づ 
 
