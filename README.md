@@ -167,3 +167,11 @@ public class GameManager : DIContext
 PAYPAL: https://paypal.me/sandichhuu
 
 ヾ(＠＾▽＾＠)ﾉ THANK YOU
+
+
+
+
+
+
+
+# ( •́∀•̀)⌐╦╦═─ pew pew pew, donate or lucky -1000
