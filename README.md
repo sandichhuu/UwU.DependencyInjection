@@ -159,3 +159,11 @@ public class GameManager : DIContext
     }
 }
 ```
+
+# (づ｡◕‿‿◕｡)づ 
+
+## IF THESE HELP YOU FINISH PROJECT, PLEASE DONATE ME A COFFE CUP
+
+PAYPAL: https://paypal.me/sandichhuu
+
+ヾ(＠＾▽＾＠)ﾉ THANK YOU
