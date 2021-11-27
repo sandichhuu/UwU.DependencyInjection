@@ -168,10 +168,20 @@ PAYPAL: https://paypal.me/sandichhuu
 
 ヾ(＠＾▽＾＠)ﾉ THANK YOU
 
+.
 
+.
 
+.
 
+.
 
+.
 
+.
 
-# ( •́∀•̀)⌐╦╦═─ pew pew pew, donate or lucky -1000
+.
+
+.
+
+###### ಠ_ಠ DONATE OR LUCKY -1000
