@@ -131,7 +131,7 @@ If your project use a lot of binding command before execute, you should enable m
 Supper easy to use. Please follow a example bellow.
 
 ```
-public class CubeBehaviour
+public class CubeBehaviour : UnityEngine.MonoBehaviour
 {
 }
 
