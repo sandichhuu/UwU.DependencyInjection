@@ -19,7 +19,7 @@ Support: Field injection, property injection, method inject.
 
 Create a class inherit DIContext then drag it into hierarchy.
 
-```
+```csharp
 public class GameManager : DIContext
 {
     public override void Setup()
@@ -37,23 +37,22 @@ public class GameManager : DIContext
 #### 2. Binding
 
 Bind interface into class.
-
-```
+```csharp
 this.binder.BindCommand<InterfaceType, ClassType>(instance);
 ```
   
 Bind class into class
-```
+```csharp
 this.binder.BindCommand<ClassType, ClassType>(instance);
 ```
 
 Bind all relevants type
-```
+```csharp
 this.binder.BindRelevantsTypeCommand(instance, isIgnoreSystemType);
 ```
 
 After register all binding command, we need to execute them.
-```
+```csharp
 this.binder.ExecuteBindingCommand();
 ```
 
@@ -62,7 +61,7 @@ this.binder.ExecuteBindingCommand();
 Use attribute <strong>[Inject]</strong> to inject dependency into a instance object.
 
 Field injection
-```
+```csharp
 public class FieldInjectionSample
 {
     [Inject] private readonly UnityEngine.Transform transform;
@@ -75,7 +74,7 @@ public class FieldInjectionSample
 ```
 
 Property injection
-```
+```csharp
 public class PropertyInjectionSample
 {
     [Inject] private UnityEngine.Transform transform { get; set; }
@@ -88,7 +87,7 @@ public class PropertyInjectionSample
 ```
 
 Method injection
-```
+```csharp
 public class MethodInjectionSample
 {
     private UnityEngine.Transform transform;
@@ -113,7 +112,7 @@ Why not support <strong>constructor injection</strong> ?
 + This plugin <strong>NOT</strong> support genegrating/creating/cloning object automatically ! All object need to be create normally.
 + Object can be create manually and pass references into constructor.
 
-```
+```csharp
 private void Awake()
 {
     var objectA = new ClassA();
@@ -130,7 +129,7 @@ If your project use a lot of binding command before execute, you should enable m
 
 Supper easy to use. Please follow a example bellow.
 
-```
+```csharp
 public class CubeBehaviour : UnityEngine.MonoBehaviour
 {
 }
