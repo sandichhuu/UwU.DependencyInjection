@@ -59,7 +59,7 @@ this.binder.ExecuteBindingCommand();
 
 #### 3. Injection
 
-Use attribute <strong>[Inject]</strong> to inject dependency into a class or object.
+Use attribute <strong>[Inject]</strong> to inject dependency into a instance object.
 
 Field injection
 ```
