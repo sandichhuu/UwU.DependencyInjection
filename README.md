@@ -60,7 +60,8 @@ this.binder.ExecuteBindingCommand();
 
 #### 3. Injection
 
-Use attribute <strong>[Inject]</strong> to inject dependency into a instance object.
+Use attribute <strong>[Inject]</strong> to inject dependencies into a instance object.
+Use this.Inject to inject dependencies into current class.
 
 Field injection
 ```csharp
