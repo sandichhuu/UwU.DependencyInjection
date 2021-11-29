@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -41,8 +41,10 @@ namespace UwU
 
             if (freeItem == null)
             {
-                freeItem = BuildNewPoolItem(SpawnInstance());
-                Debug.LogWarning("Warning ! There are no free item, add new item !");
+                var instance = SpawnInstance();
+
+                freeItem = BuildNewPoolItem(instance);
+                Debug.LogWarning($"Warning ! There are no free [{instance}], add new [{instance}] !");
             }
 
             freeItem.isFree = false;
@@ -114,7 +116,7 @@ namespace UwU
 
         private T DeepClone(T obj)
         {
-            using (var stream = new MemoryStream())
+            using (MemoryStream stream = new MemoryStream())
             {
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, obj);
@@ -128,7 +130,7 @@ namespace UwU
         {
             var instances = new T[quantity];
 
-            using (var stream = new MemoryStream())
+            using (MemoryStream stream = new MemoryStream())
             {
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, obj);

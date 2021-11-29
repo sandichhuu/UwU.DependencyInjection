@@ -13,18 +13,22 @@ namespace UwU.Unity.DI
         private UnityLogger unityLogger;
         private UwU.DI.DIContext context;
 
-        [Inject] public readonly IDependencyContainer container;
-        [Inject] public readonly IBinder binder;
-        [Inject] public readonly IInjector injector;
+        public IDependencyContainer container { get; private set; }
+        public IBinder binder { get; private set; }
+        public IInjector injector { get; private set; }
 
         [SerializeField] private bool useMultiThreading = false;
 
         private void Awake()
         {
+            UnityBridge.GameObject.Initialize(typeof(GameObject));
+
             this.unityLogger = new UnityLogger();
             this.context = new UwU.DI.DIContext(this.unityLogger, this.useMultiThreading);
 
-            this.Inject();
+            this.container = this.context.container;
+            this.binder = this.context.binder;
+            this.injector = this.context.injector;
 
             Setup();
         }

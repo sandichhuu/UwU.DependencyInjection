@@ -27,7 +27,7 @@ namespace UwU.Example
             this.binder.BindCommand<IUpdate, SquareBehaviour>(this.squareBehaviour);
 
             // circle1 will call Update()
-            this.binder.BindRelevantsTypeCommand(this.circleBehaviour1, true);    // Bind all relevant types
+            this.binder.BindRelevantsTypeCommand(this.circleBehaviour1, new string[] { });    // Bind all relevant types
 
             // circle2 will not call Update()
             this.binder.BindCommand<IAwake, CircleBehaviour>(this.circleBehaviour2);
