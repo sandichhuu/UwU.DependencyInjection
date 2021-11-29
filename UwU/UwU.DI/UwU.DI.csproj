@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A80F44C5-9422-4921-87B4-AA64BE0A7B0D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UwU.DI</RootNamespace>
+    <AssemblyName>UwU.DI</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Binding\Binder.cs" />
+    <Compile Include="Binding\BindingCommand.cs" />
+    <Compile Include="Binding\IBinder.cs" />
+    <Compile Include="Collection\IReadOnlyCollection.cs" />
+    <Compile Include="Collection\MultiThreadReadOnlyCollection.cs" />
+    <Compile Include="Collection\SingleThreadReadOnlyCollection.cs" />
+    <Compile Include="Container\HashContainer.cs" />
+    <Compile Include="Container\IDependencyContainer.cs" />
+    <Compile Include="DIContext.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="GC\ObjectHandler.cs" />
+    <Compile Include="GC\ObjectHandlerExtension.cs" />
+    <Compile Include="InjectAttribute.cs" />
+    <Compile Include="Injection\IInjector.cs" />
+    <Compile Include="Injection\Injector.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UwU.Log\UwU.Log.csproj">
+      <Project>{5ad3dc7b-dcad-4717-bfcd-09c42eefb93d}</Project>
+      <Name>UwU.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UwU.UnityBridge\UwU.UnityBridge.csproj">
+      <Project>{a152aceb-2a08-4d96-a26a-d68a6c98d7fd}</Project>
+      <Name>UwU.UnityBridge</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

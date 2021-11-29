@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UwU.DI", "UwU.DI\UwU.DI.csproj", "{A80F44C5-9422-4921-87B4-AA64BE0A7B0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UwU.Log", "UwU.Log\UwU.Log.csproj", "{5AD3DC7B-DCAD-4717-BFCD-09C42EEFB93D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UwU.UnityBridge", "UwU.UnityBridge\UwU.UnityBridge.csproj", "{A152ACEB-2A08-4D96-A26A-D68A6C98D7FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A80F44C5-9422-4921-87B4-AA64BE0A7B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A80F44C5-9422-4921-87B4-AA64BE0A7B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A80F44C5-9422-4921-87B4-AA64BE0A7B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A80F44C5-9422-4921-87B4-AA64BE0A7B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AD3DC7B-DCAD-4717-BFCD-09C42EEFB93D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AD3DC7B-DCAD-4717-BFCD-09C42EEFB93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AD3DC7B-DCAD-4717-BFCD-09C42EEFB93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AD3DC7B-DCAD-4717-BFCD-09C42EEFB93D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A152ACEB-2A08-4D96-A26A-D68A6C98D7FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A152ACEB-2A08-4D96-A26A-D68A6C98D7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A152ACEB-2A08-4D96-A26A-D68A6C98D7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A152ACEB-2A08-4D96-A26A-D68A6C98D7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB6A44FF-40CF-487A-BF76-68025695AE54}
+	EndGlobalSection
+EndGlobal
