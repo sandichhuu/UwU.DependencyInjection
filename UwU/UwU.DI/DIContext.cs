@@ -28,9 +28,14 @@ namespace UwU.DI
             if (SelfInstance == null)
                 SelfInstance = this;
 
-            this.binder.BindRelevantsTypeCommand(this.container, true);
-            this.binder.BindRelevantsTypeCommand(this.binder, true);
-            this.binder.BindRelevantsTypeCommand(this.injector, true);
+            var ignoreNamespace = new[]
+            {
+                "System", "UnityEngine"
+            };
+
+            this.binder.BindRelevantsTypeCommand(this.container, ignoreNamespace);
+            this.binder.BindRelevantsTypeCommand(this.binder, ignoreNamespace);
+            this.binder.BindRelevantsTypeCommand(this.injector, ignoreNamespace);
 
             this.binder.ExecuteBindingCommand();
         }

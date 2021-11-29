@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UwU.UnityBridge;
 
 namespace UwU.DI.Binding
 {
@@ -10,6 +11,8 @@ namespace UwU.DI.Binding
 
     public class Binder : IBinder, IDisposable
     {
+        private static readonly string[] IgnoreNamespace = new[] { "System", "UnityEngine" };
+
         private readonly ILogger logger;
         private readonly IDependencyContainer container;
         private readonly bool useMultiThread;
@@ -39,11 +42,29 @@ namespace UwU.DI.Binding
             }
         }
 
-        public void BindRelevantsTypeCommand(object instance, bool ignoreSystemType)
+        public void BindRelevantsTypeCommand(object instance)
+        {
+            BindRelevantsTypeCommand(instance, IgnoreNamespace);
+        }
+
+        public void BindGameObjectRelevantsTypeCommand<ComponentType>(string gameObjectName)
+        {
+            BindGameObjectRelevantsTypeCommand<ComponentType>(gameObjectName, IgnoreNamespace);
+        }
+
+        public void BindGameObjectRelevantsTypeCommand<ComponentType>(string gameObjectName, string[] ignoreNamespaceList)
+        {
+            var objectHolder = GameObject.Find(gameObjectName);
+            var component = objectHolder.GetComponent<ComponentType>();
+
+            BindRelevantsTypeCommand(component, ignoreNamespaceList);
+        }
+
+        public void BindRelevantsTypeCommand(object instance, string[] ignoreNamespaceList)
         {
             var instanceType = instance.GetType();
 
-            foreach (var type in GetRelevantTypes(instanceType, ignoreSystemType))
+            foreach (var type in GetRelevantTypes(instanceType, ignoreNamespaceList))
             {
                 var typeHash = type.GetHashCode();
 
@@ -56,8 +77,13 @@ namespace UwU.DI.Binding
 
                 this.bindingCommands.Add(bindingCommand);
 
-                this.logger?.Trace($"BindR SourceType[{type.Name}] -> TargetType[{instanceType.Name}] -> [{instance.GetHashCode()}]");
+                this.logger?.Trace($"BindRelevants SourceType[{type.Name}] -> TargetType[{instanceType.Name}] -> [{instance.GetHashCode()}]");
             }
+        }
+
+        public void BindCommand<SourceType>(SourceType sourceType)
+        {
+            BindCommand<SourceType, SourceType>(sourceType);
         }
 
         public void BindCommand<SourceType, TargetType>(TargetType instance)
@@ -75,6 +101,30 @@ namespace UwU.DI.Binding
             this.bindingCommands.Add(bindingCommand);
 
             this.logger?.Trace($"Bind SourceType[{sourceType.Name}] -> TargetType[{targetType.Name}] -> [{instance.GetHashCode()}]");
+        }
+
+        public void BindGameObjectCommand<SourceType>(string gameObjectName)
+        {
+            BindGameObjectCommand<SourceType, SourceType>(gameObjectName);
+        }
+
+        public void BindGameObjectCommand<SourceType, TargetType>(string gameObjectName)
+        {
+            var sourceType = typeof(SourceType);
+            var targetType = typeof(TargetType);
+            var objectHolder = GameObject.Find(gameObjectName);
+            var component = objectHolder.GetComponent<SourceType>();
+
+            var bindingCommand = new BindingCommand
+            {
+                instaceHandle = new ObjectHandler(component),
+                sourceTypeHash = sourceType.GetHashCode(),
+                targetTypeHash = targetType.GetHashCode()
+            };
+
+            this.bindingCommands.Add(bindingCommand);
+
+            this.logger?.Trace($"BindGameObject SourceType[{sourceType.Name}] -> TargetType[{targetType.Name}] -> [{component.GetHashCode()}]");
         }
 
         public void Unbind<T>()
@@ -107,12 +157,26 @@ namespace UwU.DI.Binding
             this.bindingCommands?.Dispose();
         }
 
-        private IEnumerable<Type> GetRelevantTypes(Type type, bool ignoreSystemType)
+        private IEnumerable<Type> GetRelevantTypes(Type type, string[] ignoreList)
         {
+            bool IsIgnore(string namespaceString)
+            {
+                var ignore = false;
+                for (var i = 0; i < ignoreList.Length; i++)
+                {
+                    if (namespaceString.StartsWith(ignoreList[i]))
+                    {
+                        ignore = true;
+                        break;
+                    }
+                }
+
+                return ignore;
+            }
+
             foreach (var implementedInterface in type.GetInterfaces())
             {
-                if (ignoreSystemType &&
-                    implementedInterface.Namespace.StartsWith("System"))
+                if (IsIgnore(implementedInterface.Namespace))
                 {
                     continue;
                 }
@@ -123,8 +187,7 @@ namespace UwU.DI.Binding
             var currentBaseType = type.BaseType;
             while (currentBaseType != null)
             {
-                if (ignoreSystemType &&
-                    currentBaseType.GetType().Namespace.StartsWith("System"))
+                if (IsIgnore(currentBaseType.Namespace))
                 {
                     currentBaseType = currentBaseType.BaseType;
                     continue;
