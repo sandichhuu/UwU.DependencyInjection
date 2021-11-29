@@ -35,24 +35,35 @@ public class GameManager : DIContext
 
 ##### Binding dependency not create new instance ! not automatic inject dependency into instance !
 
-Bind interface into class.
+Bind interface/class into class.
 ```csharp
+this.binder.BindCommand<ClassType>(ClassType sourceType);
+this.binder.BindCommand<ClassType, ClassType>(instance);
 this.binder.BindCommand<InterfaceType, ClassType>(instance);
 ```
-  
-Bind class into class
-```csharp
-this.binder.BindCommand<ClassType, ClassType>(instance);
-```
 
-Bind all relevants type
+Bind to gameObject component
 ```csharp
-this.binder.BindRelevantsTypeCommand(instance, isIgnoreSystemType);
+this.binder.BindToGameObjectCommand<SourceType>(string gameObjectName);
+this.binder.BindToGameObjectCommand<SourceType, TargetType>(string gameObjectName);
 ```
 
 After register all binding command, we need to execute them.
 ```csharp
 this.binder.ExecuteBindingCommand();
+```
+
+Bind all relevants type
+
+```csharp
+var ignoreNamespaceList = new[] 
+{
+    "System",
+    "UnityEngine"
+};
+
+this.binder.BindRelevantsTypeCommand(instance, ignoreNamespaceList);
+this.binder.BindGameObjectRelevantsTypeCommand<T>(string gameObjectName, string[] ignoreList);
 ```
 
 #### 3. Injection
