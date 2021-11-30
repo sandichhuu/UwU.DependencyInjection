@@ -103,6 +103,21 @@ namespace UwU.DI.Binding
             this.logger?.Trace($"Bind SourceType[{sourceType.Name}] -> TargetType[{targetType.Name}] -> [{instance.GetHashCode()}]");
         }
 
+        public void BindComponentRelevantsCommand<SourceType>()
+        {
+            BindRelevantsTypeCommand(GameObject.FindObjectOfType<SourceType>());
+        }
+
+        public void BindComponentCommand<SourceType>()
+        {
+            BindCommand<SourceType, SourceType>(GameObject.FindObjectOfType<SourceType>());
+        }
+
+        public void BindComponentCommand<SourceType, TargetType>()
+        {
+            BindCommand<SourceType, TargetType>(GameObject.FindObjectOfType<TargetType>());
+        }
+
         public void BindGameObjectCommand<SourceType>(string gameObjectName)
         {
             BindGameObjectCommand<SourceType, SourceType>(gameObjectName);

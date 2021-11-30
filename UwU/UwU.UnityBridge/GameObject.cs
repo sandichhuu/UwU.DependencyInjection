@@ -10,6 +10,7 @@ namespace UwU.UnityBridge
 
         private static MethodInfo FindMethod;
         private static MethodInfo GetComponentMethod;
+        private static MethodInfo FindObjectOfTypeMethod;
 
         public static void Initialize(Type unityEngineType)
         {
@@ -18,6 +19,10 @@ namespace UwU.UnityBridge
             GetComponentMethod = unityEngineType
                 .GetMethods()
                 .Single(m => m.Name == "GetComponent" && m.IsGenericMethod);
+
+            FindObjectOfTypeMethod = unityEngineType.BaseType
+                .GetMethods()
+                .Single(m => m.Name == "FindObjectOfType" && m.IsGenericMethod && m.GetParameters().Length > 0);
 
             IsTypeInitialized = true;
         }
@@ -49,6 +54,20 @@ namespace UwU.UnityBridge
 
             var genericMethod = GetComponentMethod.MakeGenericMethod(typeof(T));
             var component = genericMethod.Invoke(this.gameObject, null);
+
+            if (component == null)
+                throw new Exception($"Component [{typeof(T).Name}] not found !");
+
+            return (T)component;
+        }
+
+        public static T FindObjectOfType<T>()
+        {
+            if (!IsTypeInitialized)
+                throw new Exception("UnityBridge.GameObject not initialized !");
+
+            var genericMethod = FindObjectOfTypeMethod.MakeGenericMethod(typeof(T));
+            var component = genericMethod.Invoke(null, new object[] { true });
 
             if (component == null)
                 throw new Exception($"Component [{typeof(T).Name}] not found !");

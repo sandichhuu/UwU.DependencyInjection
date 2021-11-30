@@ -2,6 +2,12 @@
 {
     public interface IBinder
     {
+        void BindComponentRelevantsCommand<SourceType>();
+
+        void BindComponentCommand<SourceType, TargetType>();
+
+        void BindComponentCommand<SourceType>();
+
         /// <summary>
         /// Binding clean, not bind "UnityEngine" and "System" component
         /// </summary>
