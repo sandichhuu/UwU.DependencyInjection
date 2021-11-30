@@ -128,7 +128,7 @@ namespace UwU.DI.Binding
             var sourceType = typeof(SourceType);
             var targetType = typeof(TargetType);
             var objectHolder = GameObject.Find(gameObjectName);
-            var component = objectHolder.GetComponent<SourceType>();
+            var component = objectHolder.GetComponent<TargetType>();
 
             var bindingCommand = new BindingCommand
             {
