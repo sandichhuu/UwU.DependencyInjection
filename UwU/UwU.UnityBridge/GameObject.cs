@@ -34,7 +34,12 @@ namespace UwU.UnityBridge
             if (!IsTypeInitialized)
                 throw new Exception("UnityBridge.GameObject not initialized !");
 
-            return new GameObject(FindMethod.Invoke(null, new[] { name }));
+            var gameObject = FindMethod.Invoke(null, new[] { name });
+
+            if (gameObject == null)
+                throw new Exception($"GameObject [{name}] not found on scene !");
+
+            return new GameObject(gameObject);
         }
 
         public T GetComponent<T>()
@@ -43,7 +48,12 @@ namespace UwU.UnityBridge
                 throw new Exception("UnityBridge.GameObject not initialized !");
 
             var genericMethod = GetComponentMethod.MakeGenericMethod(typeof(T));
-            return (T)genericMethod.Invoke(this.gameObject, null);
+            var component = genericMethod.Invoke(this.gameObject, null);
+
+            if (component == null)
+                throw new Exception($"Component [{typeof(T).Name}] not found !");
+
+            return (T)component;
         }
 
         public static bool IsReady()
