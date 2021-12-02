@@ -175,6 +175,8 @@ namespace UwU.DI.Binding
 
         private IEnumerable<Type> GetRelevantTypes(Type type, string[] ignoreList)
         {
+            yield return type;
+
             bool IsIgnore(string namespaceString)
             {
                 var ignore = false;
