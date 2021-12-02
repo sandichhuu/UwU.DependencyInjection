@@ -56,7 +56,9 @@ namespace UwU.UnityBridge
             var component = genericMethod.Invoke(this.gameObject, null);
 
             if (component == null)
-                throw new Exception($"Component [{typeof(T).Name}] not found !");
+            {
+                throw new Exception($"GetComponent [{typeof(T).Name}] not found on gameObject {this.gameObject}");
+            }
 
             return (T)component;
         }
@@ -70,7 +72,7 @@ namespace UwU.UnityBridge
             var component = genericMethod.Invoke(null, new object[] { true });
 
             if (component == null)
-                throw new Exception($"Component [{typeof(T).Name}] not found !");
+                throw new Exception($"FindObjectOfType [{typeof(T).Name}] not found !");
 
             return (T)component;
         }
