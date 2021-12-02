@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace UwU.Unity.DI
 {
-    using UwU.DI;
     using UwU.DI.Binding;
     using UwU.DI.Container;
     using UwU.DI.Injection;
@@ -17,14 +16,12 @@ namespace UwU.Unity.DI
         public IBinder binder { get; private set; }
         public IInjector injector { get; private set; }
 
-        [SerializeField] private bool useMultiThreading = false;
-
         private void Awake()
         {
             UnityBridge.GameObject.Initialize(typeof(GameObject));
 
             this.unityLogger = new UnityLogger();
-            this.context = new UwU.DI.DIContext(this.unityLogger, this.useMultiThreading);
+            this.context = new UwU.DI.DIContext(this.unityLogger);
 
             this.container = this.context.container;
             this.binder = this.context.binder;

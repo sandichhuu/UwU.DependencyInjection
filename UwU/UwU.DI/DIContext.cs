@@ -17,12 +17,12 @@ namespace UwU.DI
 
         public readonly ILogger logger;
 
-        public DIContext(ILogger logger, bool useMultiThread)
+        public DIContext(ILogger logger)
         {
             this.logger = logger;
 
             this.container = new HashContainer();
-            this.binder = new Binder(this.container, this.logger, useMultiThread);
+            this.binder = new Binder(this.container, this.logger, false);
             this.injector = new Injector(this.container, this.logger);
 
             if (SelfInstance == null)
