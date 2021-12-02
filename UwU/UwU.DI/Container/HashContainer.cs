@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 
 namespace UwU.DI.Container
 {
-    using UwU.Logger;
-
     public class HashContainer : IDependencyContainer, IDisposable
     {
-        private readonly ILogger logger;
         private readonly IDictionary<int, object> objectContainer;
         private readonly IDictionary<int, IList<int>> dependencyContainer;
 
-        public HashContainer(ILogger logger)
+        public HashContainer()
         {
-            this.logger = logger;
             this.objectContainer = new Dictionary<int, object>(64);
             this.dependencyContainer = new Dictionary<int, IList<int>>(64);
         }
