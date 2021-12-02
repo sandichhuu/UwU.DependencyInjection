@@ -11,8 +11,6 @@ namespace UwU.DI.Binding
 
     public class Binder : IBinder, IDisposable
     {
-        private static readonly string[] IgnoreNamespace = new[] { "System", "UnityEngine" };
-
         private readonly ILogger logger;
         private readonly IDependencyContainer container;
         private readonly bool useMultiThread;
@@ -44,18 +42,30 @@ namespace UwU.DI.Binding
 
         public void BindRelevantsTypeCommand(object instance)
         {
-            BindRelevantsTypeCommand(instance, IgnoreNamespace);
+            BindRelevantsTypeCommand(instance);
         }
 
-        public void BindGameObjectRelevantsTypeCommand<ComponentType>(string gameObjectName)
+        public void BindComponentRelevantsCommand<FindComponentType>()
         {
-            BindGameObjectRelevantsTypeCommand<ComponentType>(gameObjectName, IgnoreNamespace);
+            var component = GameObject.FindObjectOfType<FindComponentType>();
+            BindRelevantsTypeCommand(component);
         }
 
-        public void BindGameObjectRelevantsTypeCommand<ComponentType>(string gameObjectName, string[] ignoreNamespaceList)
+        public void BindComponentRelevantsCommand<FindComponentType>(string[] ignoreNamespaceList)
+        {
+            var component = GameObject.FindObjectOfType<FindComponentType>();
+            BindRelevantsTypeCommand(component, ignoreNamespaceList);
+        }
+
+        public void BindGameObjectRelevantsTypeCommand<FindComponentType>(string gameObjectName)
+        {
+            BindGameObjectRelevantsTypeCommand<FindComponentType>(gameObjectName);
+        }
+
+        public void BindGameObjectRelevantsTypeCommand<FindComponentType>(string gameObjectName, string[] ignoreNamespaceList)
         {
             var objectHolder = GameObject.Find(gameObjectName);
-            var component = objectHolder.GetComponent<ComponentType>();
+            var component = objectHolder.GetComponent<FindComponentType>();
 
             BindRelevantsTypeCommand(component, ignoreNamespaceList);
         }
@@ -101,11 +111,6 @@ namespace UwU.DI.Binding
             this.bindingCommands.Add(bindingCommand);
 
             this.logger?.Trace($"Bind SourceType[{sourceType.Name}] -> TargetType[{targetType.Name}] -> [{instance.GetHashCode()}]");
-        }
-
-        public void BindComponentRelevantsCommand<SourceType>()
-        {
-            BindRelevantsTypeCommand(GameObject.FindObjectOfType<SourceType>());
         }
 
         public void BindComponentCommand<SourceType>()

@@ -2,11 +2,13 @@
 {
     public interface IBinder
     {
-        void BindComponentRelevantsCommand<SourceType>();
+        void BindComponentRelevantsCommand<FindComponentType>();
 
-        void BindComponentCommand<SourceType, TargetType>();
+        void BindComponentRelevantsCommand<FindComponentType>(string[] ignoreNamespaceList);
 
-        void BindComponentCommand<SourceType>();
+        void BindComponentCommand<SourceType, FindComponentType>();
+
+        void BindComponentCommand<FindComponentType>();
 
         /// <summary>
         /// Binding clean, not bind "UnityEngine" and "System" component
@@ -18,21 +20,21 @@
         /// <summary>
         /// Binding clean, not bind "UnityEngine" and "System" component
         /// </summary>
-        void BindGameObjectRelevantsTypeCommand<T>(string gameObjectName);
+        void BindGameObjectRelevantsTypeCommand<GetComponentType>(string gameObjectName);
 
-        void BindGameObjectRelevantsTypeCommand<T>(string gameObjectName, string[] ignoreNamespaceList);
+        void BindGameObjectRelevantsTypeCommand<GetComponentType>(string gameObjectName, string[] ignoreNamespaceList);
 
         void BindCommand<SourceType>(SourceType sourceType);
 
         void BindCommand<SourceType, TargetType>(TargetType instance);
 
-        void BindGameObjectCommand<SourceType>(string gameObjectName);
+        void BindGameObjectCommand<GetComponentType>(string gameObjectName);
 
-        void BindGameObjectCommand<SourceType, TargetType>(string gameObjectName);
+        void BindGameObjectCommand<SourceType, GetComponentType>(string gameObjectName);
 
-        void Unbind<T>();
+        void Unbind<TargetType>();
 
-        void Unbind<T>(T obj);
+        void Unbind<TargetType>(TargetType instance);
 
         void ExecuteBindingCommand();
     }
