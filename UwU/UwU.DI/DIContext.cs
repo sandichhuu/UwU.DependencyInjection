@@ -2,7 +2,7 @@
 
 namespace UwU.DI
 {
-    using UwU.Log;
+    using UwU.Logger;
     using UwU.DI.Binding;
     using UwU.DI.Container;
     using UwU.DI.Injection;

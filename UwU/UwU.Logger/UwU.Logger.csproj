@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A80F44C5-9422-4921-87B4-AA64BE0A7B0D}</ProjectGuid>
+    <ProjectGuid>{5AD3DC7B-DCAD-4717-BFCD-09C42EEFB93D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UwU.DI</RootNamespace>
-    <AssemblyName>UwU.DI</AssemblyName>
+    <RootNamespace>UwU.Logger</RootNamespace>
+    <AssemblyName>UwU.Logger</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,32 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Binding\Binder.cs" />
-    <Compile Include="Binding\BindingCommand.cs" />
-    <Compile Include="Binding\IBinder.cs" />
-    <Compile Include="Collection\IReadOnlyCollection.cs" />
-    <Compile Include="Collection\MultiThreadReadOnlyCollection.cs" />
-    <Compile Include="Collection\SingleThreadReadOnlyCollection.cs" />
-    <Compile Include="Container\HashContainer.cs" />
-    <Compile Include="Container\IDependencyContainer.cs" />
-    <Compile Include="DIContext.cs" />
-    <Compile Include="Extension.cs" />
-    <Compile Include="GC\ObjectHandler.cs" />
-    <Compile Include="GC\ObjectHandlerExtension.cs" />
-    <Compile Include="InjectAttribute.cs" />
-    <Compile Include="Injection\IInjector.cs" />
-    <Compile Include="Injection\Injector.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UwU.Logger\UwU.Logger.csproj">
-      <Project>{5ad3dc7b-dcad-4717-bfcd-09c42eefb93d}</Project>
-      <Name>UwU.Logger</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UwU.UnityBridge\UwU.UnityBridge.csproj">
-      <Project>{a152aceb-2a08-4d96-a26a-d68a6c98d7fd}</Project>
-      <Name>UwU.UnityBridge</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

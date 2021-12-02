@@ -7,7 +7,7 @@ namespace UwU.DI.Binding
     using UwU.DI.Collection;
     using UwU.DI.Container;
     using UwU.DI.GC;
-    using UwU.Log;
+    using UwU.Logger;
 
     public class Binder : IBinder, IDisposable
     {

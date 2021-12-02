@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace UwU.DI.Injection
 {
-    using UwU.Log;
+    using UwU.Logger;
     using UwU.DI.Container;
 
     public class Injector : IInjector
