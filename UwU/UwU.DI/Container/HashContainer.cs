@@ -4,15 +4,19 @@ using System.Collections.Concurrent;
 
 namespace UwU.DI.Container
 {
+    using UwU.Logger;
+
     public class HashContainer : IDependencyContainer, IDisposable
     {
-        private readonly ConcurrentDictionary<int, object> objectContainer;
-        private readonly ConcurrentDictionary<int, IList<int>> dependencyContainer;
+        private readonly ILogger logger;
+        private readonly IDictionary<int, object> objectContainer;
+        private readonly IDictionary<int, IList<int>> dependencyContainer;
 
-        public HashContainer()
+        public HashContainer(ILogger logger)
         {
-            this.objectContainer = new ConcurrentDictionary<int, object>(8, 64);
-            this.dependencyContainer = new ConcurrentDictionary<int, IList<int>>(8, 64);
+            this.logger = logger;
+            this.objectContainer = new Dictionary<int, object>(64);
+            this.dependencyContainer = new Dictionary<int, IList<int>>(64);
         }
 
         public void AddDirect(int sourceTypeHash, int targetTypeHash, object instance)
@@ -27,7 +31,7 @@ namespace UwU.DI.Container
             }
             else
             {
-                this.dependencyContainer.TryAdd(sourceTypeHash, new List<int> { instanceHash });
+                this.dependencyContainer.Add(sourceTypeHash, new List<int> { instanceHash });
             }
 
             if (this.dependencyContainer.ContainsKey(targetTypeHash))
@@ -38,12 +42,12 @@ namespace UwU.DI.Container
             }
             else
             {
-                this.dependencyContainer.TryAdd(targetTypeHash, new List<int> { instanceHash });
+                this.dependencyContainer.Add(targetTypeHash, new List<int> { instanceHash });
             }
 
             if (!this.objectContainer.ContainsKey(instanceHash))
             {
-                this.objectContainer.TryAdd(instanceHash, instance);
+                this.objectContainer.Add(instanceHash, instance);
             }
         }
 
@@ -65,7 +69,7 @@ namespace UwU.DI.Container
             }
             else
             {
-                this.dependencyContainer.TryAdd(typeHash, new List<int> { instanceHash });
+                this.dependencyContainer.Add(typeHash, new List<int> { instanceHash });
             }
 
             if (this.objectContainer.ContainsKey(instanceHash))
@@ -74,7 +78,7 @@ namespace UwU.DI.Container
             }
             else
             {
-                this.objectContainer.TryAdd(instanceHash, instance);
+                this.objectContainer.Add(instanceHash, instance);
             }
         }
 
@@ -93,9 +97,11 @@ namespace UwU.DI.Container
 
                     if (this.objectContainer.ContainsKey(instanceHash))
                     {
-                        this.objectContainer.TryRemove(instanceHash, out var _);
+                        this.objectContainer.Remove(instanceHash);
                     }
                 }
+
+                this.dependencyContainer.Remove(typeHash);
             }
         }
 
@@ -110,7 +116,7 @@ namespace UwU.DI.Container
 
             if (this.objectContainer.ContainsKey(instanceHash))
             {
-                this.objectContainer.TryRemove(instanceHash, out var _);
+                this.objectContainer.Remove(instanceHash);
             }
 
             foreach (var dependency in this.dependencyContainer)
@@ -130,7 +136,7 @@ namespace UwU.DI.Container
 
             if (this.objectContainer.ContainsKey(instanceHash))
             {
-                this.objectContainer.TryRemove(instanceHash, out var _);
+                this.objectContainer.Remove(instanceHash);
             }
 
             foreach (var dependency in this.dependencyContainer)

@@ -21,7 +21,7 @@ namespace UwU.DI
         {
             this.logger = logger;
 
-            this.container = new HashContainer();
+            this.container = new HashContainer(this.logger);
             this.binder = new Binder(this.container, this.logger, useMultiThread);
             this.injector = new Injector(this.container, this.logger);
 
