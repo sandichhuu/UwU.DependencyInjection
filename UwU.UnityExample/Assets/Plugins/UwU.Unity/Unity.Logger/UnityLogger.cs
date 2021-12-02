@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace UwU.Unity.Log
+namespace UwU.Unity.Logger
 {
-    public class UnityLogger : UwU.Log.ILogger
+    public class UnityLogger : UwU.Logger.ILogger
     {
         public void Error(object message)
         {

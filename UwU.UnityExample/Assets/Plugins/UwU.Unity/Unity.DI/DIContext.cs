@@ -6,7 +6,7 @@ namespace UwU.Unity.DI
     using UwU.DI.Binding;
     using UwU.DI.Container;
     using UwU.DI.Injection;
-    using UwU.Unity.Log;
+    using UwU.Unity.Logger;
 
     public abstract class DIContext : MonoBehaviour
     {
