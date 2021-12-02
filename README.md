@@ -3,7 +3,7 @@
 ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true) <strong>PRODUCT FROM VIETNAM ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true) LOVE FROM VIETNAMESE</strong> ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true)
 
 Why use ?
-- Dependency injection: Simple flow, multithreading support, easy to control, can binding all relevant types.
+- Dependency injection: Simple flow, easy to control, can binding all relevant types.
 - Free, open source, allow for commerce purpose.
 
 Any improve idea, please comment on <strong>Issues</strong> tab.
@@ -224,27 +224,6 @@ private void Awake()
     var objectB = new ClassB(objectA);
 }
 ```
-
-#### 4. Multithread support
-
-If your project use a lot of binding command before execute, you should enable multithreading feature.
-
-```csharp
-public class GameManager : DIContext
-{
-    public override void Setup()
-    {
-      // This function is used for binding dependency
-    }
-  
-    public override void Initialize()
-    {
-      // Finish setup, start game here
-    }
-}
-```
-
-![Alt text](https://github.com/vohuu/Assets/blob/main/UseMultiThreading.png?raw=true)
 
 # (づ｡◕‿‿◕｡)づ 
 
