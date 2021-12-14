@@ -42,7 +42,23 @@ namespace UwU.DI.Binding
 
         public void BindRelevantsTypeCommand(object instance)
         {
-            BindRelevantsTypeCommand(instance);
+            var instanceType = instance.GetType();
+
+            foreach (var type in GetRelevantTypes(instanceType, new string[] { }))
+            {
+                var typeHash = type.GetHashCode();
+
+                var bindingCommand = new BindingCommand
+                {
+                    instaceHandle = new ObjectHandler(instance),
+                    sourceTypeHash = typeHash,
+                    targetTypeHash = typeHash
+                };
+
+                this.bindingCommands.Add(bindingCommand);
+
+                this.logger?.Trace($"BindRelevants SourceType[{type.Name}] -> TargetType[{instanceType.Name}] -> [{instance.GetHashCode()}]");
+            }
         }
 
         public void BindComponentRelevantsCommand<FindComponentType>()
