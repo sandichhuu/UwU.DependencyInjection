@@ -7,26 +7,21 @@ namespace UwU.DI
     using UwU.DI.Container;
     using UwU.DI.Injection;
 
-    public sealed class DIContext : IDisposable
+    public sealed class Context : IDisposable
     {
-        public static DIContext SelfInstance;
-
         public readonly IDependencyContainer container;
         public readonly IBinder binder;
         public readonly IInjector injector;
 
         public readonly ILogger logger;
 
-        public DIContext(ILogger logger)
+        public Context(ILogger logger)
         {
             this.logger = logger;
 
             this.container = new HashContainer();
             this.binder = new Binder(this.container, this.logger, false);
             this.injector = new Injector(this.container, this.logger);
-
-            if (SelfInstance == null)
-                SelfInstance = this;
 
             var ignoreNamespace = new[]
             {

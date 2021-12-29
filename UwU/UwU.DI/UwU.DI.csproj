@@ -50,8 +50,7 @@
     <Compile Include="Collection\SingleThreadReadOnlyCollection.cs" />
     <Compile Include="Container\HashContainer.cs" />
     <Compile Include="Container\IDependencyContainer.cs" />
-    <Compile Include="DIContext.cs" />
-    <Compile Include="Extension.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="GC\ObjectHandler.cs" />
     <Compile Include="GC\ObjectHandlerExtension.cs" />
     <Compile Include="InjectAttribute.cs" />
