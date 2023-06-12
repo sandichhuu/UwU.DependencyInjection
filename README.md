@@ -1,252 +1,234 @@
-# UωU ❤❤❤ UNITY DEPENDENCY INJECTION
+# UωU ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true) UNITY DEPENDENCY INJECTION
 
-![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true) <strong>PRODUCT FROM VIETNAM ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true) LOVE FROM VIETNAMESE</strong> ![Alt text](https://github.com/vohuu/Assets/blob/main/vnico16.png?raw=true)
-
-Why use ?
-- Dependency injection: Simple flow, easy to control, can binding all relevant types.
-- Free, open source, allow for commerce purpose.
-
-Any improve idea, please comment on <strong>Issues</strong> tab.
-
-## Dependency injection
-
-Support: Field injection, property injection, method inject.
-
-#### 1. Setup
-
-Create a class inherit DIContext then drag it into hierarchy.
-
-```csharp
-public class GameManager : DIContext
-{
-    public override void Setup()
-    {
-      // This function is used for binding dependency
-    }
-  
-    public override void Initialize()
-    {
-      // Finish setup, start game here
-    }
-}
-```
-
-#### 2. Binding
-
-##### Binding dependency not create new instance ! not automatic inject dependency into instance !
-
-Bind interface/class into class.
-```csharp
-this.binder.BindCommand<ClassType>(ClassType sourceType);
-this.binder.BindCommand<ClassType, ClassType>(instance);
-this.binder.BindCommand<InterfaceType, ClassType>(instance);
-```
-
-Bind to gameObject component
-```csharp
-this.binder.BindToGameObjectCommand<SourceType>(string gameObjectName);
-this.binder.BindToGameObjectCommand<SourceType, TargetType>(string gameObjectName);
-```
-
-After register all binding command, we need to execute them.
-```csharp
-this.binder.ExecuteBindingCommand();
-```
-
-Bind all relevants type
-
-```csharp
-var ignoreNamespaceList = new[] 
-{
-    "System",
-    "UnityEngine"
-};
-
-this.binder.BindRelevantsTypeCommand(instance, ignoreNamespaceList);
-this.binder.BindGameObjectRelevantsTypeCommand<T>(string gameObjectName, string[] ignoreList);
-```
-
-Need more ? All binding feature here.
-```csharp
-namespace UwU.DI.Binding
-{
-    public interface IBinder
-    {
-        /// <summary>
-        /// Find component instance on scene then bind all relevant types.
-        /// </summary>
-        void BindComponentRelevantsCommand<FindComponentType>();
-
-        /// <summary>
-        /// Find component instance on scene then bind all relevant types.
-        /// Support ignore namespace.
-        /// </summary>
-        void BindComponentRelevantsCommand<FindComponentType>(string[] ignoreNamespaceList);
-
-        /// <summary>
-        /// Find component instance on scene, then bind SourceType into it.
-        /// SoureType can be interface or class.
-        /// </summary>
-        void BindComponentCommand<SourceType, FindComponentType>();
-
-        /// <summary>
-        /// Find component instance on scene, then bind it self.
-        /// </summary>
-        void BindComponentCommand<FindComponentType>();
-
-        /// <summary>
-        /// Bind relevant types of instance.
-        /// </summary>
-        void BindRelevantsTypeCommand(object instance);
-
-        /// <summary>
-        /// Bind relevant types of instance.
-        /// Support ignore namespace.
-        /// </summary>
-        void BindRelevantsTypeCommand(object instance, string[] ignoreNamespaceList);
-
-        /// <summary>
-        /// Find gameObject with name on scene, then get component inside.
-        /// Finally, bind component.
-        /// </summary>
-        void BindGameObjectRelevantsTypeCommand<GetComponentType>(string gameObjectName);
-
-        /// <summary>
-        /// Find gameObject with name on scene, then get component inside.
-        /// Finally, bind component.
-        ///
-        /// Support ignore namespace.
-        /// </summary>
-        void BindGameObjectRelevantsTypeCommand<GetComponentType>(string gameObjectName, string[] ignoreNamespaceList);
-
-        /// <summary>
-        /// Bind interface/class to instance.
-        /// </summary>
-        void BindCommand<SourceType>(SourceType sourceType);
-
-        /// <summary>
-        /// Bind interface/class to relevant type's instance.
-        /// </summary>
-        void BindCommand<SourceType, TargetType>(TargetType instance);
-
-        /// <summary>
-        /// Find gameObject with name, then get component inside.
-        /// Bind that component.
-        /// </summary>
-        void BindGameObjectCommand<GetComponentType>(string gameObjectName);
-
-        /// <summary>
-        /// Find gameObject with name, then get component inside.
-        /// Bind interface/class to relevant type's instance.
-        /// </summary>
-        void BindGameObjectCommand<SourceType, GetComponentType>(string gameObjectName);
-
-        /// <summary>
-        /// Unbind the type
-        /// </summary>
-        void Unbind<TargetType>();
-
-        /// <summary>
-        /// Unbind the instance
-        /// </summary>
-        void Unbind<TargetType>(TargetType instance);
-
-        /// <summary>
-        /// All binding command will not executed, use this function to make binding work !
-        /// </summary>
-        void ExecuteBindingCommand();
-    }
-}
-```
-
-#### 3. Injection
-
-Use attribute <strong>[Inject]</strong> to inject dependencies into a instance object.
-
-Use <strong>this.Inject()</strong> to inject dependencies into current class.
-
-Field injection
-```csharp
-public class FieldInjectionSample
-{
-    [Inject] private readonly UnityEngine.Transform transform;
-
-    public void Initialize()
-    {
-        this.Inject();
-    }
-}
-```
-
-Property injection
-```csharp
-public class PropertyInjectionSample
-{
-    [Inject] private UnityEngine.Transform transform { get; set; }
-
-    public void Initialize()
-    {
-        this.Inject();
-    }
-}
-```
-
-Method injection
-```csharp
-public class MethodInjectionSample
-{
-    private UnityEngine.Transform transform;
-    
-    [Inject]
-    public void AnyMethodName(UnityEngine.Transform transform)
-    {
-        this.transform = transform;
-    }
-
-    public void Initialize()
-    {
-        this.Inject();
-    }
-}
-```
-
-Why not support <strong>constructor injection</strong> ?
-
-+ On Unity, game objects, components are usually using <strong>UnityEngine.Object.Instantiate</strong> to create new instance.
-+ Constructor inside MonoBehaviour is not common.
-+ This plugin <strong>NOT</strong> support genegrating/creating/cloning object automatically ! All object need to be create normally.
-+ Object can be create manually and pass references into constructor.
-
-```csharp
-private void Awake()
-{
-    var objectA = new ClassA();
-    var objectB = new ClassB(objectA);
-}
-```
 
 # (づ｡◕‿‿◕｡)づ 
 
+## 1. Getting Started
+Download the latest .unitypackage from the releases page and open it within your project. Install it as you would for any other package.
+
+
+## 2. Why and How
+The traditional way references between objects instances in Unity project is drag and drop.
+That way is easy to understand but the project come crazy if too big or some mistake make all references gones.
+And that is why this project is exist.
+
+The <strong>UwU.DependencyInjection</strong> module keep all registered references.
+And provide references when the object is needed.
+That's is how it work.
+
+## 3. Binding
+### 3.1 BindCommand
+Binding the pure C# object.
+
+```csharp
+public class GameManager : UnityContext
+{
+    public override void Setup()
+    {
+        var instance = new PureCs();
+        this.binder.BindCommand<PureCs>(instance);  // Bind the instance as PureCs type.
+        this.binder.ExecuteBindingCommand();        // This line is procedure.
+    }
+}
+```
+
+### 3.2 BindComponentCommand
+Binding the existing instance from hierarchy.
+
+```csharp
+public class GameManager : UnityContext
+{
+    public override void Setup()
+    {
+        this.binder.BindComponentCommand<MonoObject>();     // Find MonoObject from hierachy and bind that instance as MonoObject.
+        this.binder.ExecuteBindingCommand();                // This line is procedure.
+    }
+}
+```
+
+### 3.3 BindComponentRelevantsCommand
+Find the component from hierarchy, bind all type have references to the class.
+This command is rarely to use, because it's not clear function.
+This make developer have to remember or looking for the type, the implemented interfaces, ... to understand what are binded.
+```csharp
+public class ExampleClass : MonoBehaviour, ILoop {...}
+
+public class GameManager : UnityContext
+{
+    public override void Setup()
+    {
+        /* 
+            Bind the instance from hierarchy to these types: System.Object, UnityEngine.Object, 
+            UnityEngine.Component, UnityEngine.MonoBehaviour, ILoop.
+        */
+        this.binder.BindComponentRelevantsCommand<ExampleClass>();
+        this.binder.ExecuteBindingCommand(); // This line is procedure.
+    }
+}
+```
+
+On the case have unwanted binding type, we can filtered it out.
+```csharp
+public class ExampleClass : MonoBehaviour, ILoop {...}
+
+public class GameManager : UnityContext
+{
+    public override void Setup()
+    {
+        /* 
+            Bind the instance from hierarchy to these types: ILoop 
+        */
+        var filterNamespaces = new string[]
+        {
+            "System", "UnityEngine"
+        };
+        this.binder.BindComponentRelevantsCommand<ExampleClass>(filterNamespaces); 
+        this.binder.ExecuteBindingCommand(); // This line is procedure.
+    }
+}
+```
+
+### 3.4 BindRelevantsTypeCommand
+This function have logic the same as <strong>"BindComponentRelevantsCommand"</strong> but working with only pure C# object.
+```csharp
+public class PureCs : ILoop, IFixedLoop {...}
+
+public class GameManager : UnityContext
+{
+    public override void Setup()
+    {
+        var instance = new PureCs();
+    
+        /* 
+            Bind the instance from hierarchy to these types: System.Object, ILoop, IFixedLoop.
+        */
+        this.binder.BindRelevantsTypeCommand(instance);
+        this.binder.ExecuteBindingCommand(); // This line is procedure.
+    }
+}
+```
+
+On the case have unwanted binding type, we can filtered it out.
+```csharp
+public class PureCs : ILoop, IFixedLoop {...}
+
+public class GameManager : UnityContext
+{
+    public override void Setup()
+    {
+        var instance = new PureCs();
+    
+        /* 
+            Bind the instance from hierarchy to these types: ILoop, IFixedLoop
+        */
+        var filterNamespaces = new string[]
+        {
+            "System"
+        };
+        this.binder.BindRelevantsTypeCommand(instance, filterNamespaces); 
+        this.binder.ExecuteBindingCommand(); // This line is procedure.
+    }
+}
+```
+
+### 3.5 Unbind
+On the case we destroy the object on scene, or swap scene and don't need the reference to the object anymore.
+We can use this function to clear the references.
+
+```csharp
+public class GameManager : UnityContext
+{
+    public void OnSwapScene()
+    {
+        this.binder.Unbind<PureCs>(this.pureCsInstance);    
+        this.binder.Unbind<MonoObject>();
+    }
+}
+```
+
+### 3.6 ExecuteBindingCommand
+All command is just a command, it's not executed.
+And this function will make all registered command executing.
+
+```csharp
+public class GameManager : UnityContext
+{
+    public override void Setup()
+    {
+        var instance = new PureCs();
+        var objectOnScene = FindObjectOfType<HelloWorld>();
+        
+        this.binder.BindCommand<PureCs>(instance);
+        this.binder.BindCommand<HelloWorld>(objectOnScene);
+        this.binder.BindComponentCommand<GoodbyeWorld>();
+        
+        this.binder.ExecuteBindingCommand(); // After this line, 3 above command will be executed.
+    }
+}
+```
+
+## 4. Injection
+After binding phase, the references is ready to use now.
+After function ".Inject()" is called, the fields, properties have [Inject] attribute will be injected
+
+```csharp
+public class GameManager : UnityContext
+{
+    [Inject] private readonly ShapeManager shapeManager;
+
+    private ILoop shapeLooper;
+
+    public override void Setup()
+    {
+        this.binder.BindComponentCommand<ShapeManager>();   // Find component ShapeManager from hierarchy and bind.
+        this.binder.ExecuteBindingCommand();                // Do all command above this line.
+
+        this.Inject();                                      // Inject ShapeManager to GameManager (this instance).
+    }
+
+    public override void Initialize()
+    {
+        this.shapeManager.Inject();                         // Help shape manager have reference to box and sphere.
+        this.shapeManager.Setup();                          // This function is replaced Start function.
+        this.shapeLooper = this.shapeManager;
+    }
+
+    private void Update()
+    {
+        var deltaTime = Time.deltaTime;
+        this.shapeLooper.Loop(deltaTime);
+    }
+}
+```
+
+## 5. Extra
+This module support not only injection registered dependencies.
+We can have references on scene but with the easier way.
+
+```csharp
+public class ShapeManager : MonoBehaviour, ILoop
+{
+    [GetComponent] private readonly ShapeManager self;
+    [FindObjectOfType] private readonly BoxBehaviour box;
+    [GetComponentInChildren] private readonly SphereBehaviour sphere;
+
+    public void Setup()
+    {
+        this.box.transform.position = new Vector3(-5.5f, 0, 0);
+        this.sphere.transform.position = new Vector3(+5.5f, 0, 0);
+
+        this.box.Setup();
+        this.sphere.Setup();
+    }
+
+    void ILoop.Loop(float dt)
+    {
+        this.box.Loop(dt);
+        this.sphere.Loop(dt);
+    }
+}
+```
+
 ## IF THESE HELP YOU FINISH PROJECT, PLEASE DONATE ME A COFFEE CUP
-
 PAYPAL: https://paypal.me/sandichhuu
-
-ヾ(＠＾▽＾＠)ﾉ THANK YOU
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
 ###### ಠ_ಠ DONATE OR LUCKY -1000
