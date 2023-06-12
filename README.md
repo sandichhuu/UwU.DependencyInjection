@@ -230,10 +230,10 @@ public class ShapeManager : MonoBehaviour, ILoop
 ```
 
 ## The package is shipped with extra packages: 
-UwU.Pool
-UwU.ObserverSystem
-UwU.BezierSolver
+UwU.Pool<br />
+UwU.ObserverSystem<br />
+UwU.BezierSolver<br />
 ...
 
-## ಠ_ಠ DONATE OR LUCKY -1000
+## ಠ_ಠ Use it but not donate, lucky -999 points.
 PAYPAL: https://paypal.me/sandichhuu
