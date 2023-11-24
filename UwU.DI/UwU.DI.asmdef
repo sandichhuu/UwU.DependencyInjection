@@ -1,0 +1,17 @@
+{
+    "name": "UwU.DI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:649a1cef9d6ce1940a11cce5ebe518f5",
+        "GUID:bb48807777796734080929b68a166652"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
